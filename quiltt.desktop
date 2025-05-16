@@ -1,5 +1,5 @@
 [Desktop Entry]
-Name=quillt
+Name=quiltt
 Comment=A simple terminal using VTE
 Exec=quiltt
 Icon=utilities-terminal
