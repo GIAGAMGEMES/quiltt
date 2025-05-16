@@ -1,5 +1,5 @@
 {
-  description = "Quiltt - A simple terminal using VTE";
+  description = "quiltt";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
