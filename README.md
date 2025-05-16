@@ -5,10 +5,3 @@ how to build :
       cd quillt
      
       make
-      
-      cd ..
-      
-      cp quiltt /usr/bin/quiltt
-      
-      cp quiltt.desktop /usr/share/applications
-    
