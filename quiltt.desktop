@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Quiltt Terminal
+Comment=A simple terminal using VTE
+Exec=quiltt
+Icon=utilities-terminal
+Terminal=false
+Type=Application
+Categories=System;TerminalEmulator;
+StartupNotify=true
