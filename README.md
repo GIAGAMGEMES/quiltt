@@ -1,5 +1,5 @@
-how to build 
-``
+how to build :
+
   git clone https://github.com/GIAGAMGEMES/quiltt
   
   cd quillt
@@ -11,4 +11,4 @@ how to build
   cp quiltt /usr/bin/quiltt
   
   cp quiltt.desktop /usr/share/applications
-``
+
