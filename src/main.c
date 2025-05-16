@@ -129,15 +129,12 @@ void load_config() {
         lua_close(L);
         return;
     }
-
-    // Get reload interval
     lua_getglobal(L, "config_reload_interval");
     if (lua_isnumber(L, -1)) {
         config.reload_interval = lua_tointeger(L, -1);
     }
     lua_pop(L, 1);
 
-    // Get font
     lua_getglobal(L, "font");
     if (lua_isstring(L, -1)) {
         free(config.font);
@@ -145,7 +142,6 @@ void load_config() {
     }
     lua_pop(L, 1);
 
-    // Get colors
     lua_getglobal(L, "foreground");
     if (lua_isstring(L, -1)) {
         set_color_from_string(L, -1, &config.foreground);
@@ -172,7 +168,6 @@ void load_config() {
 
     load_palette(L);
 
-    // Get other settings
     lua_getglobal(L, "scrollback_lines");
     if (lua_isnumber(L, -1)) {
         config.scrollback_lines = lua_tointeger(L, -1);
@@ -204,12 +199,12 @@ static void apply_config(VteTerminal *terminal) {
     vte_terminal_set_color_cursor(terminal, &config.cursor);
     vte_terminal_set_color_highlight(terminal, &config.highlight);
 
-    // Set the 16-color palette at once
+
     vte_terminal_set_colors(terminal,
-                              NULL, // foreground colors (can be NULL)
-                              NULL, // background colors (can be NULL)
-                              config.palette, // palette colors
-                              16);            // number of palette colors
+                              NULL,
+                              NULL,
+                              config.palette, 
+                              16); 
 
     vte_terminal_set_scrollback_lines(terminal, config.scrollback_lines);
     vte_terminal_set_bold_is_bright(terminal, config.bold_is_bright);
@@ -258,7 +253,6 @@ static void child_ready_wrapper(VteTerminal *terminal, int exit_status, GError *
             g_error_free(error);
         }
     }
-    // You can perform other actions here after the child is ready
 }
 
 int main(int argc, char *argv[]) {
@@ -269,7 +263,6 @@ int main(int argc, char *argv[]) {
 
     gtk_init(&argc, &argv);
 
-    // Initialize configuration
     init_config();
 
     window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
@@ -279,14 +272,11 @@ int main(int argc, char *argv[]) {
 
     terminal = vte_terminal_new();
 
-    // Set the terminal's unique ID
     gtk_widget_set_name(GTK_WIDGET(terminal), QUILTT_TERMINAL_ID);
 
-    // Load and apply initial config
     load_config();
     apply_config(VTE_TERMINAL(terminal));
 
-    // Set up config file monitoring
     if (config.reload_interval > 0) {
         g_timeout_add_seconds(config.reload_interval, check_config_file, terminal);
     }
